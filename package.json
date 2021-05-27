@@ -1,0 +1,27 @@
+{
+  "name": "openelis-contrib-qaframework",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=14.15.5",
+    "npm": ">=7.5.3"
+  },
+  "scripts": {
+    "openElis-test": "mvn test -Dcucumber.filter.tags='@selenium'"
+  },
+  "devDependencies": {
+    "@types/uuid": "3.4.7",
+    "properties-reader": "2.2.0"
+  },
+  "main": "index.js",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/I-TECH-UW"
+  },
+  "keywords": [
+    "qa"
+  ],
+  "author": "moses",
+  "license": "ISC"
+}
