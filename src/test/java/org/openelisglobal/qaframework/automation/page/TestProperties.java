@@ -6,20 +6,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Properties;
 
-/**
- * Exposes test properties. This class is typically used like this:
- * TestProperties properties = TestProperties.instance();
- * <p>
- * Properties are obtained using the following order of lookup: 1. Java system
- * property (System.getProperty). This allows for command line -D setting. 2. OS
- * environment variable (System.getenv). 3. test.properties file found on the
- * classpath under org/openmrs/uitestframework/ 4. The hard-wired defaults in
- * this class. Also note that test.properties can be "filled in" with properties
- * from pom.xml by using ${}, e.g. in test.properties: webapp.url=${webapp.url}
- * in pom.xml: &lt;properties&gt;
- * &lt;webapp.url&gt;http://localhost:8080/openmrs&lt;/webapp.url&gt;
- * &lt;/properties&gt;
- */
 public class TestProperties {
 
 	public static final String WEBDRIVER_PROPERTY = "webdriver";
@@ -32,17 +18,13 @@ public class TestProperties {
 
 	public static final String LOGIN_USERNAME_PROPERTY = "login.username";
 
-	public static final String DEFAULT_LOGIN_USERNAME = "admin";
+	public static final String DEFAULT_LOGIN_USERNAME = "itech";
 
 	public static final String WEBAPP_URL_PROPERTY = "webapp.url";
 
-	public static final String DEFAULT_WEBAPP_URL = "http://localhost:8080/openmrs";
+	public static final String DEFAULT_WEBAPP_URL = "http://localhost:8443/OpenELIS-Global";
 
 	public static final String AUTO_LOGIN_AT_STARTUP_PROPERTY = "login.auto";
-
-	public static final String LOGIN_LOCATION_PROPERTY = "login.location";
-
-	public static final String DEFAULT_LOGIN_LOCATION = "Outpatient Clinic";
 
 	public static final String HEADLESS_PROPERTY = "headless";
 
@@ -89,10 +71,6 @@ public class TestProperties {
 
 	public String getPassword() {
 		return getProperty(LOGIN_PASSWORD_PROPERTY, DEFAULT_PASSWORD);
-	}
-
-	public String getLocation() {
-		return getProperty(LOGIN_LOCATION_PROPERTY, DEFAULT_LOGIN_LOCATION);
 	}
 
 	public String getHeadless() {

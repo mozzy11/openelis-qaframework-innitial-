@@ -21,7 +21,7 @@ public class LoginSteps extends Steps {
 	}
 
 	private void enterUsername(String username) {
-		driver.findElement(By.id("username")).sendKeys(username);
+		driver.findElement(By.id("loginName")).sendKeys(username);
 	}
 
 	private void enterPassword(String password) {
@@ -29,11 +29,11 @@ public class LoginSteps extends Steps {
 	}
 
 	private WebElement getLoginButton() {
-		return getElement(By.id("loginButton"));
+		return getElement(By.id("submitButton"));
 	}
 
 	private WebElement getLogOutLink() {
-		return getElement(By.className("logout"));
+		return getElement(By.id("logout-form"));
 	}
 
 	@Given("User visits login page")
@@ -55,20 +55,6 @@ public class LoginSteps extends Steps {
 			password = testProperties.getPassword();
 		}
 		enterPassword(password);
-	}
-
-	@And("User Selects {string} Login Location")
-	public void selectLoginLocation(String loginLocation) {
-		if ("firstLocation".equals(loginLocation)) {
-			driver.findElement(By.cssSelector("#sessionLocation li")).click();
-		} else if ("noLocation".equals(loginLocation)) {
-			getLoginButton().click();
-			assertNotNull(getLoginButton());
-		} else if ("setupLocation".equals(loginLocation)) {
-			loginPage.clickOn(By.id(testProperties.getLocation()));
-		} else {
-			loginPage.clickOn(By.id(loginLocation));
-		}
 	}
 
 	@And("User Logs in")

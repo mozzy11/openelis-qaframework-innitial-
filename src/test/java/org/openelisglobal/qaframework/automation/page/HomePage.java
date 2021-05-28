@@ -8,17 +8,12 @@ public class HomePage extends Page {
 	}
 
 	public String getLoggedUsername() {
-		return findElement(By.cssSelector(".identifier")).getText();
+		return findElement(By.id("user-info")).getText();
 	}
 
 	@Override
 	public String getPageUrl() {
-		return "/referenceapplication/home.page";
-	}
-
-	@Override
-	public String getPageAliasUrl() {
-		return "/index.htm";
+		return "/Dashboard.do";
 	}
 
 }

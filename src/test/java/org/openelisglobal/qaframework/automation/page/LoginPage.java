@@ -10,13 +10,11 @@ import java.io.InputStream;
 
 public class LoginPage extends Page {
 
-	public static final String LOGIN_PATH = "/login.htm";
-	public static final String MODULES_NOT_RUNNING_MESSAGE = "If you are seeing this page, it means that the OpenMRS Platform is running";
+	public static final String LOGIN_PATH = "/LoginPage.do";
 
 	static final By USERNAME = By.id("username");
 	static final By PASSWORD = By.id("password");
 	static final By LOGIN = By.id("loginButton");
-	static final By LOCATIONS = By.cssSelector("#sessionLocation li");
 
 	static final String LOGOUT_PATH = "/logout";
 
@@ -33,53 +31,6 @@ public class LoginPage extends Page {
 	@Override
 	public void go() {
 		goToPage(LOGIN_PATH);
-	}
-
-	public Page login(String user, String password, Integer location) {
-		postLoginForm(user, password, location);
-		return this;
-	}
-
-	private void postLoginForm(String user, String password, Integer location) {
-		String postJs;
-		InputStream in = null;
-		try {
-			in = getClass().getResourceAsStream("/post.js");
-			postJs = IOUtils.toString(in);
-			in.close();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} finally {
-			IOUtils.closeQuietly(in);
-		}
-
-		String post = postJs + " post('" + getContextPageUrl()
-				+ "', {username: '" + user + "', password: '" + password;
-		if (location != null) {
-			post += "', sessionLocation: " + location + "});";
-		} else {
-			post += "});";
-		}
-		((JavascriptExecutor) driver).executeScript(post);
-	}
-
-	public Page login(String user, String password) {
-		String value = findElement(By.cssSelector("#sessionLocation li"))
-				.getAttribute("value");
-		return login(user, password, Integer.parseInt(value));
-	}
-
-	public Page login(String user, String password, String locationName) {
-		String value = findElement(By.id(locationName)).getAttribute("value");
-		return login(user, password, Integer.parseInt(value));
-	}
-
-	public Page loginAsAdmin() {
-		return login(username, password);
-	}
-
-	public Page loginAsAdmin(String locationName) {
-		return login(username, password, locationName);
 	}
 
 	@Override

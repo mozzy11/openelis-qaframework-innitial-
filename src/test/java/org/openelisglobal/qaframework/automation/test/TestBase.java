@@ -14,7 +14,6 @@ import com.saucelabs.junit.SauceOnDemandTestWatcher;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.vfs2.AllFileSelector;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
@@ -30,8 +29,6 @@ import org.junit.runner.Description;
 import org.openelisglobal.qaframework.automation.page.LoginPage;
 import org.openelisglobal.qaframework.automation.page.Page;
 import org.openelisglobal.qaframework.automation.page.TestProperties;
-import org.openelisglobal.qaframework.automation.page.exception.PageRejectedException;
-import org.openelisglobal.qaframework.automation.test.TestData.UserInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -46,7 +43,6 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.ServerErrorException;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Response;
@@ -57,7 +53,6 @@ import jakarta.ws.rs.core.Response;
  * as:
  * <ul>
  * <li>initialize Selenium WebDriver</li>
- * <li>create (and delete) test patient, @see {@link #createTestPatient()}</li>
  * <li>@see {@link #goToLoginPage()}</li>
  * <li>@see {@link #login()}</li>
  * <li>@see {@link #assertPage(Page)} - @see {@link #pageContent()}</li>
@@ -188,41 +183,6 @@ public class TestBase implements SauceOnDemandSessionIdProvider {
 		driver.manage().timeouts()
 				.pageLoadTimeout(MAX_PAGE_LOAD_IN_SECONDS, TimeUnit.SECONDS);
 
-		long start = System.currentTimeMillis();
-		boolean autoLoginAtStart = properties.automaticallyLoginAtStartup();
-		while (autoLoginAtStart & !driver.getCurrentUrl().endsWith("index.htm")) {
-			try {
-				page = login();
-				// wait for loading a page for MAX_PAGE_LOAD_IN_SECONDS +
-				// MAX_WAIT_IN_SECONDS
-				// and interpret no exception as successful connection
-				return;
-			} catch (ServerErrorException e) {
-				failTest(testMethod, e);
-			} catch (PageRejectedException e) {
-				failTest(testMethod, e);
-			} catch (ProcessingException e) {
-				failTest(testMethod, e);
-			} catch (Exception e) {
-				if (System.currentTimeMillis() > start
-						+ MAX_SERVER_STARTUP_IN_MILLISECONDS) {
-					failTest(testMethod, e);
-				} else {
-					// log that connection timed out, and try again in next
-					// iteration
-					System.out.println("Failed to login in " + testMethod
-							+ ", trying again...");
-				}
-			}
-		}
-	}
-
-	private void failTest(String testMethod, Exception e) {
-		serverFailure = true;
-		System.out
-				.println("Test killed due to server failure in " + testMethod);
-		ExceptionUtils.printRootCauseStackTrace(e);
-		fail("Test killed due to server failure");
 	}
 
 	@After
@@ -234,10 +194,6 @@ public class TestBase implements SauceOnDemandSessionIdProvider {
 
 	private boolean isRunningOnSauceLabs() {
 		return sauceLabsAuthentication != null;
-	}
-
-	public Page login() {
-		return goToLoginPage().loginAsAdmin();
 	}
 
 	public LoginPage goToLoginPage() {
@@ -388,12 +344,6 @@ public class TestBase implements SauceOnDemandSessionIdProvider {
 	 */
 	public String pageContent() {
 		return driver.findElement(By.id("content")).getText();
-	}
-
-	public void login(UserInfo user) {
-		LoginPage page = getLoginPage();
-		assertPage(page);
-		page.login(user.username, user.password);
 	}
 
 }
