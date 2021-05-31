@@ -4,9 +4,9 @@
     mvn clean install -Dcucumber.filter.tags='@null'
 
 ## Configuration
-- Set Your test configurations in `src/test/resources/org/openelisglobal/qaframework/test.properties`.
+- Set Your test configurations in [src/test/resources/org/openelisglobal/qaframework/test.properties](./src/test/resources/org/openelisglobal/qaframework/test.properties)
 
-- See Feature files under `src/features/openelis`
+- See Feature files under [src/features/openelis](./src/features/openelis)
 
 ### Running test projects
 
