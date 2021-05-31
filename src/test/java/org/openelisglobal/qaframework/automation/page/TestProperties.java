@@ -39,11 +39,8 @@ public class TestProperties {
 	public TestProperties() {
 		properties = new Properties();
 		try {
-			URL resource = Thread
-					.currentThread()
-					.getContextClassLoader()
-					.getResource(
-							"org/openelisglobal/qaframework/test.properties");
+			URL resource = Thread.currentThread().getContextClassLoader()
+					.getResource("test.properties");
 			if (resource != null) {
 				InputStream input = resource.openStream();
 				properties.load(new InputStreamReader(input, "UTF-8"));
