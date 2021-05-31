@@ -1,12 +1,14 @@
 package org.openelisglobal.qaframework.automation;
 
 import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.assertNotNull;
@@ -15,17 +17,22 @@ import org.openelisglobal.qaframework.RunTest;
 
 public class LoginSteps extends Steps {
 
-	@After(RunTest.HOOK.SELENIUM)
+	@After(RunTest.HOOK.LOGIN)
 	public void destroy() {
 		quit();
 	}
 
+	@Before(RunTest.HOOK.LOGIN)
+	public WebDriver getDriver() {
+		return getWebDriver();
+	}
+
 	private void enterUsername(String username) {
-		driver.findElement(By.id("loginName")).sendKeys(username);
+		getDriver().findElement(By.id("loginName")).sendKeys(username);
 	}
 
 	private void enterPassword(String password) {
-		driver.findElement(By.id("password")).sendKeys(password);
+		getDriver().findElement(By.id("password")).sendKeys(password);
 	}
 
 	private WebElement getLoginButton() {

@@ -22,21 +22,21 @@ public class Steps extends ApplicationTestBase {
 	}
 
 	protected void quit() {
-		if (driver != null) {
-			driver.quit();
+		if (getWebDriver() != null) {
+			getWebDriver().quit();
 		}
 	}
 
 	protected WebElement getElement(By elementBy) {
 		try {
-			return driver.findElement(elementBy);
+			return getWebDriver().findElement(elementBy);
 		} catch (NoSuchElementException e) {
 			return null;
 		}
 	}
 
 	protected boolean textExists(String text) {
-		return driver.findElements(
+		return getWebDriver().findElements(
 				By.xpath("//*[contains(text(),'" + text + "')]")).size() > 0;
 	}
 

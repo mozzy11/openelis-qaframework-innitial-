@@ -73,7 +73,7 @@ public class TestBase implements SauceOnDemandSessionIdProvider {
 	@Rule
 	public TestName testName = new TestName();
 
-	protected WebDriver driver;
+	private WebDriver driver;
 	@Rule
 	public TestRule testWatcher = new TestWatcher() {
 
@@ -190,6 +190,10 @@ public class TestBase implements SauceOnDemandSessionIdProvider {
 		if (driver != null) {
 			driver.quit();
 		}
+	}
+
+	protected WebDriver getWebDriver() {
+		return driver;
 	}
 
 	private boolean isRunningOnSauceLabs() {

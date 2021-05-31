@@ -1,11 +1,19 @@
 
-## Installing dependencies
-- `mvn clean install -DskipTests=true`
+## Installing dependencies wthout running tests
+
+    mvn clean install -Dcucumber.filter.tags='@null'
 
 ## Configuration
-Set Your test configurations in `src/test/resources/org/openelisglobal/qaframework/test.properties`.
+- Set Your test configurations in `src/test/resources/org/openelisglobal/qaframework/test.properties`.
 
-## Running test projects
+- See Feature files under `src/features/openelis`
 
-### Running OpenElis selenium tests
-- `npm run openElis-test`
+### Running test projects
+
+1. All OE-tests
+
+        mvn test
+
+2. login tests only
+
+       mvn test -Dcucumber.filter.tags='@login'

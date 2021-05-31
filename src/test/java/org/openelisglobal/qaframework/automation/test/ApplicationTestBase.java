@@ -17,6 +17,6 @@ public class ApplicationTestBase extends TestBase {
 
 	@Override
 	protected LoginPage getLoginPage() {
-		return new LoginPage(driver);
+		return new LoginPage(getWebDriver());
 	}
 }
